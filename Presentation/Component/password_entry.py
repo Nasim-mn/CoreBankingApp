@@ -1,0 +1,33 @@
+from ttkbootstrap import Entry, Button, Frame
+
+
+class PasswordEntry(Frame):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.grid_columnconfigure(0, weight=1)
+
+        self.password_entry = Entry(self, show="*")
+        self.password_entry.grid(row=0, column=0, sticky="ew")
+
+        self.change_state_button = Button(self, text="Show", bootstyle="secondary", command=self.change_state_button_clicked)
+        self.change_state_button.grid(row=0, column=1, sticky="w", padx=(5, 0))
+
+    def change_state_button_clicked(self):
+        current_value = self.change_state_button.cget("text")
+
+        if current_value == "Show":
+            self.change_state_button.config(text="Hide")
+            self.password_entry.config(show="")
+        else:
+            self.change_state_button.config(text="Show")
+            self.password_entry.config(show="*")
+
+    def get_value(self):
+        value = self.password_entry.get()
+        return value
+
+    def clear(self):
+        self.password_entry.delete(0, "end")
+        self.password_entry.config(show="*")
+        self.change_state_button.config(text="Show")
